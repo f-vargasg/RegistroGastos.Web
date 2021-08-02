@@ -4,4 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RegistroGastos.DTO\RegistroGastos.DTO.csproj" />
+    <ProjectReference Include="..\RegistroGastos.Logica\RegistroGastos.Logica.csproj" />
+    <ProjectReference Include="..\RegistrosGastos.Datos2\RegistrosGastos.Datos2.csproj" />
+  </ItemGroup>
+
 </Project>
