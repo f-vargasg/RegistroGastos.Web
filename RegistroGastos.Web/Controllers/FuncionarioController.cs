@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RegistroGastos.DTO;
+using RegistroGastos.Logica;
+using RegistroGastos.Web.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,9 +89,9 @@ namespace RegistroGastos.Web.Controllers
 
         public ActionResult ListarMonedas ()
         {
-            SucursalProductoVM model = new SucursalProductoVM();
+            MonedaVM model = new MonedaVM();
 
-            var resultado = new SucursalLogica().ListarTotalSucursales();
+            var resultado = new MonedaLogica().ListarTodasLasMonedas();
 
             if (resultado.ElementAt(0).GetType() == typeof(ErrorDTO))
             {
@@ -96,11 +99,11 @@ namespace RegistroGastos.Web.Controllers
             }
             else
             {
-                model.ListadoSucursales = new List<SucursalDTO>();
+                model.ListadoMonedas = new List<MonedaDTO>();
                 foreach (var item in resultado)
                 {
-                    var itemConvertido = (SucursalDTO)item;
-                    model.ListadoSucursales.Add(itemConvertido);
+                    var itemConvertido = (MonedaDTO)item;
+                    model.ListadoMonedas.Add(itemConvertido);
                 }
             }
             return View(model);

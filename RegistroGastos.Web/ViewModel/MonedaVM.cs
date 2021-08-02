@@ -12,5 +12,7 @@ namespace RegistroGastos.Web.ViewModel
         public MonedaDTO Moneda { get; set; }
 
 
+        public ErrorDTO Error { get; set; }
+
     }
 }

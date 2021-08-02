@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RegistroGastos.Logica
 {
-    class MonedaLogica
+    public class MonedaLogica
     {
         #region Variables
         RegistroGastosDbContext contexto = new RegistroGastosDbContext();

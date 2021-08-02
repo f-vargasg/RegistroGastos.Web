@@ -1,0 +1,59 @@
+﻿@model IEnumerable<RegistroGastos.DTO.MonedaDTO>
+
+@{
+    ViewData["Title"] = "ListarMonedas";
+}
+
+<h1>ListarMonedas</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DesMoneda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuIngreso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FecIngreso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdEntidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mensaje)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DesMoneda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UsuIngreso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FecIngreso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdEntidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mensaje)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
