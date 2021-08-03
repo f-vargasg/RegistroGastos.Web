@@ -1,0 +1,36 @@
+﻿@model RegistroGastos.Web.ViewModel.MonedaVM
+
+@{
+    ViewData["Title"] = "DetalleMoneda";
+}
+
+<h1>DetalleMoneda</h1>
+
+<div>
+    <h4>MonedaDTO</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Moneda.DesMoneda)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Moneda.DesMoneda)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Moneda.UsuIngreso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Moneda.UsuIngreso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Moneda.FecIngreso)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Moneda.FecIngreso)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "EditarMoneda", new {  id = Model.Moneda.IdEntidad }) |
+    <a asp-action="ListarMonedas">Back to List</a>
+</div>

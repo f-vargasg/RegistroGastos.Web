@@ -103,8 +103,134 @@ namespace RegistrosGastos.Datos2
             }
         }
 
+        public RespuestaDTO AgregarMoneda(Monedum moneda)
+        {
+            try
+            {
+                contexto.Moneda.Add(moneda);
+                var guardado = contexto.SaveChanges();
+                if (guardado > 0)
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = 1,
+                        ContenidoRespuesta = moneda.CodMonedaN,
+                        Mensaje = "Los datos se guardaron correctamente"
 
+                    };
+                }
+                else
+                {
+                    throw new Exception("No se pudo insertar el registro");
+                }
+            }
+            catch (Exception error)
+            {
+                if (error.Message.Contains("ERROR controlado"))
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = error.Message }
+                    };
+                }
+                else
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = "ERROR NO CONTROLADO" + error.InnerException }
+                    };
+                }
+            }
+        }
 
+        public RespuestaDTO EliminarMoneda(Monedum moneda)
+        {
+            try
+            {
+                contexto.Moneda.Remove(moneda);
+
+                if (contexto.SaveChanges() > 0)
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = 1,
+                        ContenidoRespuesta = moneda
+                    };
+                }
+                else
+                {
+                    throw new Exception("No se pudo eliminar el registro");
+                }
+            }
+            catch (Exception error)
+            {
+                if (error.InnerException == null)
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = error.Message }
+                    };
+                }
+                else
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = error.InnerException.Message }
+                    };
+                }
+            }
+        }
+
+        public RespuestaDTO ModificarMoneda(MonedaDTO monedaDTO)
+        {
+            try
+            {
+                var moneda = contexto.Moneda.FirstOrDefault(C => C.CodMonedaN == monedaDTO.IdEntidad);
+                if (moneda != null)
+                {
+                    moneda.DesMoneda = monedaDTO.DesMoneda;
+                    if (contexto.SaveChanges() > 0)
+                    {
+                        return new RespuestaDTO
+                        {
+                            CodigoRespuesta = 1,
+                            ContenidoRespuesta = moneda
+                        };
+                    }
+                    else
+                    {
+                        throw new Exception("No se pudo actualizar los datos de la moneda");
+                    }
+                }
+                else
+                {
+                    throw new Exception("No se encontró la moneda especificada");
+                }
+            }
+            catch (Exception error)
+            {
+                if (error.InnerException != null)
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = error.InnerException.Message }
+                    };
+                }
+                else
+                {
+                    return new RespuestaDTO
+                    {
+                        CodigoRespuesta = -1,
+                        ContenidoRespuesta = new ErrorDTO { MensajeError = error.Message }
+                    };
+                }
+            }
+        }
 
         #endregion
     }

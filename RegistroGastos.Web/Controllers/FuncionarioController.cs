@@ -87,7 +87,8 @@ namespace RegistroGastos.Web.Controllers
             }
         }
 
-        public ActionResult ListarMonedas ()
+
+        public ActionResult ListarMonedas()
         {
             MonedaVM model = new MonedaVM();
 
@@ -109,5 +110,131 @@ namespace RegistroGastos.Web.Controllers
             return View(model);
         }
 
+        public ActionResult CrearMoneda()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CrearMoneda(MonedaDTO model)
+        {
+            try
+            {
+                var resultado = new MonedaLogica().AgregarMoneda(model);
+
+
+                if (resultado.GetType() == typeof(ErrorDTO))
+                {
+                    throw new Exception("Error");
+                }
+                else
+                {
+                    return RedirectToAction("DetalleMoneda", new { id = resultado.IdEntidad });
+                    // return RedirectToAction(nameof(Index));
+                }
+
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        public ActionResult DetalleMoneda(int id)
+        {
+            MonedaVM model = new MonedaVM();
+
+            var resultado = new MonedaLogica().ObtenerMonedaPorCodigo(id);
+
+            if (resultado.GetType() == typeof(ErrorDTO))
+            {
+                model.Error = (ErrorDTO)resultado;
+            }
+            else
+            {
+                model.Moneda = (MonedaDTO)resultado;
+            }
+            return View(model);
+        }
+
+        // Get
+        public ActionResult EditarMoneda(int id)
+        {
+            MonedaVM model = new MonedaVM();
+
+            var resultado = new MonedaLogica().ObtenerMonedaPorCodigo(id);
+
+            if (resultado.GetType() == typeof(ErrorDTO))
+            {
+                model.Error = (ErrorDTO)resultado;
+            }
+            else
+            {
+                model.Moneda = (MonedaDTO)resultado;
+            }
+            return View(model.Moneda);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditarMoneda(MonedaDTO model)
+        {
+            try
+            {
+                var resultado = new MonedaLogica().ModificarMoneda(model);
+
+
+                if (resultado.GetType() == typeof(ErrorDTO))
+                {
+                    throw new Exception("Error");
+                }
+                else
+                {
+                    return RedirectToAction("DetalleMoneda", new { id = resultado.IdEntidad });
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        
+        
+        public ActionResult EliminarMoneda(int id)
+        {
+            MonedaVM model = new MonedaVM();
+
+            var resultado = new MonedaLogica().ObtenerMonedaPorCodigo(id);
+
+            if (resultado.GetType() == typeof(ErrorDTO))
+            {
+                model.Error = (ErrorDTO)resultado;
+            }
+            else
+            {
+                model.Moneda = (MonedaDTO)resultado;
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EliminarMoneda(MonedaDTO monedaDTO)
+        {
+            MonedaVM model = new MonedaVM();
+
+            var resultado = new MonedaLogica().EliminarMoneda(monedaDTO);
+
+            if (resultado.GetType() == typeof(ErrorDTO))
+            {
+                model.Error = (ErrorDTO)resultado;
+            }
+            else
+            {
+                model.Moneda = (MonedaDTO)resultado;
+            }
+            return View(model);
+        }
     }
 }

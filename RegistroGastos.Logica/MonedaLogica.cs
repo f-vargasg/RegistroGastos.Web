@@ -111,6 +111,98 @@ namespace RegistroGastos.Logica
             }
         }
 
+        public BaseDTO AgregarMoneda(MonedaDTO moneda)
+        {
+            try
+            {
+                var intermedia = new MonedaDatos(contexto);
+
+                // var clienteDat = ConvertirDTOClienteADatos(cliente);
+                var monedaDat = ConvertirDTOAMonedaDatos(moneda);
+                monedaDat.UsuIngreso = Environment.UserName;
+                monedaDat.FecIngreso = DateTime.Now;
+                var resultado = intermedia.AgregarMoneda(monedaDat);
+
+                if (resultado.CodigoRespuesta != -1)
+                {
+                    //caso de éxito
+                    return new BaseDTO
+                    {
+                        IdEntidad = Convert.ToInt32(resultado.ContenidoRespuesta),
+                        Mensaje = "Se insertaron correctamente los datos."
+                    };
+
+                }
+                else
+                {
+                    return (ErrorDTO)resultado.ContenidoRespuesta;
+                }
+            }
+            catch (Exception error)
+            {
+                return new ErrorDTO { MensajeError = error.Message };
+            }
+        }
+
+        public BaseDTO EliminarMoneda(MonedaDTO productoDTO)
+        {
+            try
+            {
+                var intermedia = new MonedaDatos(contexto);
+
+                var productoDato = ConvertirDTOAMonedaDatos(productoDTO);
+
+                var resultado = intermedia.EliminarMoneda(productoDato);
+
+                if (resultado.CodigoRespuesta != -1)
+                {
+                    // exito
+                    return new BaseDTO
+                    {
+                        Mensaje = resultado.Mensaje + " Se eliminó un total de " + resultado.ContenidoRespuesta +
+                                  " registros."
+                    };
+                }
+                else
+                {
+                    return (ErrorDTO)resultado.ContenidoRespuesta;
+                }
+            }
+            catch (Exception error)
+            {
+                return new ErrorDTO { MensajeError = error.Message };
+            }
+        }
+
+        public BaseDTO ModificarMoneda(MonedaDTO model)
+        {
+            try
+            {
+                var intermedia = new MonedaDatos(contexto);
+
+                var resultado = intermedia.ModificarMoneda(model);
+
+                if (resultado.CodigoRespuesta != -1)
+                {
+                    //Caso de éxito
+                    return new BaseDTO
+                    {
+                        IdEntidad = ((Monedum)resultado.ContenidoRespuesta).CodMonedaN,
+                        Mensaje = "Se actualizó la información de la moneda: " + ((Monedum)resultado.ContenidoRespuesta).DesMoneda
+                    };
+                }
+                else
+                {
+                    //Error controlado
+                    return (ErrorDTO)resultado.ContenidoRespuesta;
+                }
+            }
+            catch (Exception error)
+            {
+                return new ErrorDTO { MensajeError = error.Message };
+            }
+        }
+
         #endregion
 
     }

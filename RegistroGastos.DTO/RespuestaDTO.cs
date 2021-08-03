@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RegistroGastos.DTO
 {
-    public class RespuestaDTO
+    public class RespuestaDTO : BaseDTO
     {
         public int CodigoRespuesta { get; set; }
 
