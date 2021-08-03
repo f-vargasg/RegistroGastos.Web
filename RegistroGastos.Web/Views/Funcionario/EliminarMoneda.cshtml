@@ -1,4 +1,4 @@
-﻿@model RegistroGastos.Web.ViewModel.MonedaVM
+﻿@model RegistroGastos.DTO.MonedaDTO
 
 @{
     ViewData["Title"] = "EliminarMoneda";
@@ -12,27 +12,43 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Moneda.DesMoneda)
+            @Html.DisplayNameFor(model => model.DesMoneda)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Moneda.DesMoneda)
+            @Html.DisplayFor(model => model.DesMoneda)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Moneda.UsuIngreso)
+            @Html.DisplayNameFor(model => model.UsuIngreso)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Moneda.UsuIngreso)
+            @Html.DisplayFor(model => model.UsuIngreso)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Moneda.FecIngreso)
+            @Html.DisplayNameFor(model => model.FecIngreso)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Moneda.FecIngreso)
+            @Html.DisplayFor(model => model.FecIngreso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdEntidad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdEntidad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Mensaje)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Mensaje)
         </dd>
     </dl>
     
     <form asp-action="EliminarMoneda">
+        @Html.HiddenFor(model => model.IdEntidad)
+        @Html.HiddenFor(model => model.DesMoneda)
+        @Html.HiddenFor(model => model.UsuIngreso)
+        @Html.HiddenFor(model => model.FecIngreso)
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="ListarMonedas">Back to List</a>
+        <a asp-action="Index">Back to List</a>
     </form>
 </div>

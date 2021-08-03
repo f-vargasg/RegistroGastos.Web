@@ -42,6 +42,7 @@ namespace RegistroGastos.Logica
         {
             return new Monedum
             {
+                CodMonedaN = monedaDTO.IdEntidad,
                 DesMoneda = monedaDTO.DesMoneda,
                 UsuIngreso = monedaDTO.UsuIngreso,
                 FecIngreso = monedaDTO.FecIngreso
@@ -144,15 +145,13 @@ namespace RegistroGastos.Logica
             }
         }
 
-        public BaseDTO EliminarMoneda(MonedaDTO productoDTO)
+        public BaseDTO EliminarMoneda(MonedaDTO moneda)
         {
             try
             {
                 var intermedia = new MonedaDatos(contexto);
-
-                var productoDato = ConvertirDTOAMonedaDatos(productoDTO);
-
-                var resultado = intermedia.EliminarMoneda(productoDato);
+                var monedaDatos = ConvertirDTOAMonedaDatos(moneda);
+                var resultado = intermedia.EliminarMoneda(monedaDatos);
 
                 if (resultado.CodigoRespuesta != -1)
                 {

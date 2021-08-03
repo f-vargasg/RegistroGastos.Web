@@ -215,26 +215,25 @@ namespace RegistroGastos.Web.Controllers
             {
                 model.Moneda = (MonedaDTO)resultado;
             }
-            return View(model);
+            return View(model.Moneda);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EliminarMoneda(MonedaDTO monedaDTO)
+        public ActionResult EliminarMoneda(MonedaDTO model)
         {
-            MonedaVM model = new MonedaVM();
 
-            var resultado = new MonedaLogica().EliminarMoneda(monedaDTO);
+            var resultado = new MonedaLogica().EliminarMoneda(model);
 
             if (resultado.GetType() == typeof(ErrorDTO))
             {
-                model.Error = (ErrorDTO)resultado;
+                throw new Exception("Error");
             }
             else
             {
-                model.Moneda = (MonedaDTO)resultado;
+                return RedirectToAction("ListarMonedas");
             }
-            return View(model);
+
         }
     }
 }
